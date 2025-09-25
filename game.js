@@ -7,7 +7,7 @@ let aiScore = 0;
 
 // Game settings
 const PADDLE_WIDTH = 15;
-const PADDLE_HEIGHT = 100;
+const PADDLE_HEIGHT = 200;
 const PADDLE_MARGIN = 20;
 const BALL_SIZE = 16;
 const BALL_SPEED = 6;
