@@ -1,6 +1,10 @@
 const canvas = document.getElementById('pong');
 const ctx = canvas.getContext('2d');
 
+// Scoring system
+let playerScore = 0;
+let aiScore = 0;
+
 // Game settings
 const PADDLE_WIDTH = 15;
 const PADDLE_HEIGHT = 100;
@@ -78,8 +82,16 @@ function gameLoop() {
     }
 
     // Score reset (ball leaves left or right)
-    if (ballX < 0 || ballX > canvas.width) {
-        // Reset ball to center
+    if (ballX < 0) {
+        // AI scores
+        aiScore++;
+        ballX = canvas.width / 2 - BALL_SIZE / 2;
+        ballY = canvas.height / 2 - BALL_SIZE / 2;
+        ballSpeedX = BALL_SPEED * (Math.random() > 0.5 ? 1 : -1);
+        ballSpeedY = BALL_SPEED * (Math.random() * 2 - 1);
+    } else if (ballX > canvas.width) {
+        // Player scores
+        playerScore++;
         ballX = canvas.width / 2 - BALL_SIZE / 2;
         ballY = canvas.height / 2 - BALL_SIZE / 2;
         ballSpeedX = BALL_SPEED * (Math.random() > 0.5 ? 1 : -1);
@@ -111,6 +123,14 @@ function gameLoop() {
     for (let i = 10; i < canvas.height; i += 40) {
         drawRect(canvas.width / 2 - 2, i, 4, 20, '#888');
     }
+
+    // Draw scores
+    ctx.font = '32px Arial';
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'left';
+    ctx.fillText(playerScore, 32, 40);
+    ctx.textAlign = 'right';
+    ctx.fillText(aiScore, canvas.width - 32, 40);
 
     // Loop
     requestAnimationFrame(gameLoop);
